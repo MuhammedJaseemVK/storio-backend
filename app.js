@@ -16,8 +16,8 @@ connectDb().then(async () => {
   console.log("Error connecting database !")
 })
 
-var admin = require("firebase-admin");
-var serviceAccount = require("./storio-aaa61-firebase-adminsdk-3g0hh-f9c8a5402d.json");
+// var admin = require("firebase-admin");
+// var serviceAccount = require("./storio-aaa61-firebase-adminsdk-3g0hh-f9c8a5402d.json");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -35,14 +35,14 @@ var io = require('socket.io')({}, {
 app.io = io;
 
 // firebase admin setup
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://storio-aaa61-default-rtdb.asia-southeast1.firebasedatabase.app"
-});
-var db = admin.database();
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://storio-aaa61-default-rtdb.asia-southeast1.firebasedatabase.app"
+// });
+// var db = admin.database();
 
 // route for virtual cart
-var cartRouter = require('./routes/virtualCart')(io, db);
+var cartRouter = require('./routes/virtualCart')(io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

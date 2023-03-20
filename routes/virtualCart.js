@@ -39,8 +39,8 @@ const router = express.Router();
 //     // return router;
 
 // };
-module.exports = (io, db) => {
-    const ref = db.ref('ids/current/ids');
+module.exports = (io) => {
+    // const ref = db.ref('ids/current/ids');
     io.on('connection', socket => {
         let { id } = socket;
         console.log('new connection iddddd:', id);
@@ -49,12 +49,12 @@ module.exports = (io, db) => {
             console.log('disconnect id:', id);
         });
 
-        ref.on('value', (snapshot) => {
-            console.log(snapshot.val());
-            socket.emit('change', snapshot.val())
-        }, (errorObject) => {
-            console.log('The read failed: ' + errorObject.name);
-        });
+        // ref.on('value', (snapshot) => {
+        //     console.log(snapshot.val());
+        //     socket.emit('change', snapshot.val())
+        // }, (errorObject) => {
+        //     console.log('The read failed: ' + errorObject.name);
+        // });
         socket.on('valuefromsocket', val => {
             socket.broadcast.emit('change', val)
         });
