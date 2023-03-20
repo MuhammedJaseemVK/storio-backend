@@ -5,6 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors')
 
+require('dotenv').config();
+
+// database connection
+let connectDb = require('./db/db')
+connectDb().then(async () => {
+  console.log("Database connected")
+}).catch(error=>{
+  console.log(error)
+  console.log("Error connecting database !")
+})
 
 var admin = require("firebase-admin");
 var serviceAccount = require("./storio-aaa61-firebase-adminsdk-3g0hh-f9c8a5402d.json");

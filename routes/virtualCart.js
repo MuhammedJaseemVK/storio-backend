@@ -55,8 +55,8 @@ module.exports = (io, db) => {
         }, (errorObject) => {
             console.log('The read failed: ' + errorObject.name);
         });
-        socket.on('ping', socket1 => {
-            socket.emit('pong')
+        socket.on('valuefromsocket', val => {
+            socket.broadcast.emit('change', val)
         });
     });
 
