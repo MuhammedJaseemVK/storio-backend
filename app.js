@@ -28,7 +28,7 @@ var app = express();
 // socket.io setup
 var io = require('socket.io')({}, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: "*",
     credentials: true
   }
 });
