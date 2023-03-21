@@ -64,14 +64,12 @@ module.exports = (io) => {
                 let text = v.split("*")[1]
                 console.log("text: "+ text)
                 const product = await getProductsByRFID(text);
-                console.log("product: "+ product)
-                if (product.error) {
-                    console.error(product.error);
-                    return
-                } else {
+                console.log("product: "+ product.name)
+                if(product?._id){
                     productsArray.push(product)
                 }
             })
+            console.log("Emiting")
             socket.broadcast.emit('change', productsArray)
         });
     });
