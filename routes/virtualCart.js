@@ -61,7 +61,8 @@ module.exports = (io) => {
             let productsArray = []
             for (const v of val?.ids || []) {
                 let text = v.split("*")[1]
-                const product = await getProductsByRFID(text);
+                let product = await getProductsByRFID(text);
+                product.tagData = v
                 console.log("product: "+ product?.name)
                 if(product?._id){
                     productsArray.push(product)
