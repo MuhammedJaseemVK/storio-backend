@@ -58,7 +58,8 @@ module.exports = (io) => {
         //     console.log('The read failed: ' + errorObject.name);
         // });
         socket.on('valuefromsocket', val => {
-            let productsArray = val?.data?.map(async (v) => {
+            console.log(val)
+            let productsArray = val?.ids?.map(async (v) => {
                 let text = v.split("*")[1]
                 console.log(v)
                 const product = await productUtils.getProductsByRFID(text);
