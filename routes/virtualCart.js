@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { productUtils } = require('../utils/productUtils')
+const {getProductsByRFID} = require('../utils/productUtils')
 
 // const io = require("socket.io")();
 // const socketapi = {
@@ -62,7 +62,7 @@ module.exports = (io) => {
             let productsArray = val?.ids?.map(async (v) => {
                 let text = v.split("*")[1]
                 console.log(v)
-                const product = await productUtils.getProductsByRFID(text);
+                const product = await getProductsByRFID(text);
                 if (product.error) {
                     console.error(product.error);
                 } else {
