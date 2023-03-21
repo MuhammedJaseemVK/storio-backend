@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { productUtils } = require('../utils/productUtils')
+
 // const io = require("socket.io")();
 // const socketapi = {
 //     io: io
@@ -56,7 +58,17 @@ module.exports = (io) => {
         //     console.log('The read failed: ' + errorObject.name);
         // });
         socket.on('valuefromsocket', val => {
-            socket.broadcast.emit('change', val)
+            let productsArray = val?.map(async (v) => {
+                let text = v.split("*")[1]
+                console.log(v)
+                const product = await productUtils.getProductsByRFID(text);
+                if (product.error) {
+                    console.error(product.error);
+                } else {
+                    return product
+                }
+            })
+            socket.broadcast.emit('change', productsArray)
         });
     });
 

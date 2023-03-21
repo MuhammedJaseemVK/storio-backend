@@ -21,6 +21,7 @@ connectDb().then(async () => {
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var productRouter = require('./routes/products')
 var userAuth = require('./middlewares/auth/userAuth')
 
 var app = express();
@@ -72,6 +73,7 @@ app.use('/virtual-cart', () => {
 });
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/products', productRouter);
 
 app.get('/login', userAuth, function (req, res) {
   res.send("login")
