@@ -58,10 +58,13 @@ module.exports = (io) => {
         //     console.log('The read failed: ' + errorObject.name);
         // });
         socket.on('valuefromsocket', async val => {
+            console.log("val: "+val)
             let productsArray = []
             val?.ids?.forEach(async (v) => {
                 let text = v.split("*")[1]
+                console.log("text: "+ text)
                 const product = await getProductsByRFID(text);
+                console.log("product: "+ product)
                 if (product.error) {
                     console.error(product.error);
                     return
