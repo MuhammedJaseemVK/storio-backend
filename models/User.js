@@ -40,6 +40,9 @@ const userSchema = new mongoose.Schema({
   country: {
     type: String,
   },
+  dob:{
+    type:Date,
+  },
   profilePic: {
     type: String
   },

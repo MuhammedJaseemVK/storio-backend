@@ -102,13 +102,13 @@ router.post('/login', async (req, res) => {
     // Find user by username
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid username or password' });
+      return res.status(400).json({ message: 'Invalid username' });
     }
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid username or password' });
+      return res.status(400).json({ message: 'Invalid password' });
     }
 
     // Generate authentication token
@@ -120,6 +120,24 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+// Fetch profile
+router.get('/profile', async (req, res) => {
+  try {
+    const { username } = req.query;
+
+    // Find user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid username' });
+    }
+
+    res.json({ user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 // Update user profile
 router.put('/update', upload.single('profilePic'), async (req, res) => {
