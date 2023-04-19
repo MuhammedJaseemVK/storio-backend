@@ -43,6 +43,9 @@ const userSchema = new mongoose.Schema({
   dob:{
     type:Date,
   },
+  gender:{
+    type: String
+  },
   profilePic: {
     type: String
   },
