@@ -72,16 +72,26 @@ const upload = multer({ storage: storage });
 // Register new user
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
+    if (role) {
+      // Create new user
+      const user = new User({ username, email, password ,role});
+      await user.save();
+
+      // Generate authentication token
+      const token = await user.generateAuthToken();
+
+      return res.status(201).json({ user, token });
+    }
 
     // Create new user
-    const user = new User({ username, email, password });
+    const user = new User({ username, email, password,role:"user" });
     await user.save();
 
     // Generate authentication token
