@@ -12,9 +12,9 @@ router.post("/orders", async (req, res) => {
             key_id: process.env.RAZORPAY_KEY_ID,
             key_secret: process.env.RAZORPAY_SECRET,
         });
-        let {total} = req.query
+        let { total } = req.query
         const options = {
-            amount: total* 100, // amount in smallest currency unit
+            amount: total * 100, // amount in smallest currency unit
             currency: "INR",
             receipt: "receipt_order_74394",
         };
@@ -35,7 +35,7 @@ router.post("/fetchBill", async (req, res) => {
         if (product == null) {
             return res.status(404).json({ message: 'Product not found' });
         }
-        
+
         res.json({
             products: [product],
             total: product.price
@@ -47,21 +47,33 @@ router.post("/fetchBill", async (req, res) => {
 
 router.post('/success', async (req, res) => {
     try {
-      const { orderId, customerId, orderTotal, items, razorpayPaymentId, razorpayOrderId } = req.body;
-      const order = new Order({
-        orderId,
-        customerId,
-        orderTotal,
-        items,
-        razorpayPaymentId,
-        razorpayOrderId
-      });
-      const savedOrder = await order.save();
-      res.status(201).json(savedOrder);
+        const { orderId, customerId, orderTotal, items, razorpayPaymentId, razorpayOrderId } = req.body;
+        const order = new Order({
+            orderId,
+            customerId,
+            orderTotal,
+            items,
+            razorpayPaymentId,
+            razorpayOrderId
+        });
+        const savedOrder = await order.save();
+        res.status(201).json(savedOrder);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Server error');
+        console.error(error);
+        res.status(500).send('Server error');
     }
-  });
+});
+
+router.get('/orders', async (req, res) => {
+    try {
+        const customerId = req.query.id;
+        const orders = await Order.find({ customerId });
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
 
 module.exports = router;
