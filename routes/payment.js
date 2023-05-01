@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const Razorpay = require("razorpay");
 const Product = require('../models/Product');
+const Order = require('../models/Order');
 
 const router = express.Router();
 
@@ -11,9 +12,9 @@ router.post("/orders", async (req, res) => {
             key_id: process.env.RAZORPAY_KEY_ID,
             key_secret: process.env.RAZORPAY_SECRET,
         });
-
+        let {total} = req.query
         const options = {
-            amount: 6000, // amount in smallest currency unit
+            amount: total* 100, // amount in smallest currency unit
             currency: "INR",
             receipt: "receipt_order_74394",
         };
@@ -36,12 +37,31 @@ router.post("/fetchBill", async (req, res) => {
         }
         
         res.json({
-            products: product,
+            products: [product],
             total: product.price
         });
     } catch (error) {
         res.status(500).send(error);
     }
 });
+
+router.post('/success', async (req, res) => {
+    try {
+      const { orderId, customerId, orderTotal, items, razorpayPaymentId, razorpayOrderId } = req.body;
+      const order = new Order({
+        orderId,
+        customerId,
+        orderTotal,
+        items,
+        razorpayPaymentId,
+        razorpayOrderId
+      });
+      const savedOrder = await order.save();
+      res.status(201).json(savedOrder);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
 
 module.exports = router;

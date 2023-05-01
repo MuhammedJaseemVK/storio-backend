@@ -8,6 +8,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  companyName:{
+    type: String,
+    
+  },shopName:{
+    type: String,
+    
+  },
   email: {
     type: String,
     required: true,
