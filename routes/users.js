@@ -152,7 +152,7 @@ router.get('/profile', async (req, res) => {
 // Update user profile
 router.put('/update', upload.single('profilePic'), async (req, res) => {
   try {
-    const { username, mobileNumber, name, address, city, pin, state, country, dob, gender } = req.body;
+    const { username, mobileNumber, name, address, city, pin, state, country, dob, gender, category } = req.body;
 
     // Find user by mobile number
     const user = await User.findOne({ username });
@@ -170,6 +170,7 @@ router.put('/update', upload.single('profilePic'), async (req, res) => {
     user.mobileNumber = mobileNumber
     user.dob = dob
     user.gender = gender
+    user.category = category
 
     if (req.file) {
       user.profilePic = req.file.path;

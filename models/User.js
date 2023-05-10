@@ -11,6 +11,9 @@ const userSchema = new mongoose.Schema({
   companyName:{
     type: String,
     
+  },
+  category:{
+    type: String,
   },shopName:{
     type: String,
     
