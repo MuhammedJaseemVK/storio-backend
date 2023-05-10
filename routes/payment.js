@@ -32,7 +32,7 @@ router.post("/fetchBill", async (req, res) => {
     try {
         let products = req.body.products
         const product = await Product.findById(products[0]);
-        product?.quantity -= 1
+        product.quantity = product.quantity -1
         await product.save()
 
         if (product == null) {
