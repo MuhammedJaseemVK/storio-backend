@@ -78,5 +78,15 @@ router.get('/orders', async (req, res) => {
     }
 });
 
+router.get('/totalorders', async (req, res) => {
+    try {
+        const orders = await Order.find();
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
 
 module.exports = router;
