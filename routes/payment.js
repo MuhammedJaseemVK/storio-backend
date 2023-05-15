@@ -94,10 +94,7 @@ router.get('/get_notification_supplier', async (req, res) => {
         const user = await User.findOne({username:id});
         const products = await Product.find({category: user.category});
 
-        let less_quantity_products = products.filter(product=>{
-            return product.quantity < 5
-        })
-        res.status(200).json(less_quantity_products);
+        res.status(200).json(products);
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
