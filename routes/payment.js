@@ -95,7 +95,7 @@ router.get('/get_notification_supplier', async (req, res) => {
         const products = await Product.find({category: user.category});
 
         let less_quantity_products = products.filter(product=>{
-            product.quantity < 5
+            return product.quantity < 5
         })
         res.status(200).json(less_quantity_products);
     } catch (error) {
