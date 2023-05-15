@@ -3,6 +3,7 @@ const express = require("express");
 const Razorpay = require("razorpay");
 const Product = require('../models/Product');
 const Order = require('../models/Order');
+const User = require("../models/User");
 
 const router = express.Router();
 
@@ -82,6 +83,21 @@ router.get('/totalorders', async (req, res) => {
     try {
         const orders = await Order.find();
         res.status(200).json(orders);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+router.get('/get_notification_supplier', async (req, res) => {
+    try {
+        const {id} = req.query
+        const user = await User.findOne({username:id});
+        const products = await Product.find({category: user.category});
+
+        let less_quantity_products = products.filter(product=>{
+            product.quantity < 5
+        })
+        res.status(200).json(less_quantity_products);
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
