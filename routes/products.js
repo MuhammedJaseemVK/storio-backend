@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
         const product = new Product({
             name: req.body.name,
             description: req.body.description,
+            productindex:req.body.productindex,
             price: req.body.price,
             rfid: req.body.rfid,
             brand: req.body.brand,

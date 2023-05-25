@@ -10,6 +10,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  productindex:{
+    type: Number,
+    required: true
+  },
   rfid: {
     type: String,
     required: true,
