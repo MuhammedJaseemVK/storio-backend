@@ -58,7 +58,7 @@ router.post('/success', async (req, res) => {
             orderTotal,
             items,
             razorpayPaymentId,
-            razorpayOrderId
+            razorpayOrderId,
         });
         const savedOrder = await order.save();
         res.status(201).json(savedOrder);
